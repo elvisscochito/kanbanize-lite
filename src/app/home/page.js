@@ -10,11 +10,11 @@ const fetchBoards = async () => {
 }
 
 export default function Home () {
-  
+
   const [boards, setBoards] = useState([])
 
   useEffect(() => {
-    fetchBoards().then(({data}) => {
+    fetchBoards().then(({ data }) => {
       setBoards(data)
     })
   }, [])
