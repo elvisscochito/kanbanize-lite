@@ -1,0 +1,231 @@
+div.grid {
+    display: grid;
+    place-items: center;
+    grid-gap: 4rem;
+    margin-bottom: 2.5rem;
+}
+
+header.formHeader {
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-color);
+}
+
+div.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.iconContainer a {
+    margin-right: 9.5em;
+}
+
+div.iconContainer img.iconLogin {
+    width: 10em;
+    height: 10em;
+    position: absolute;
+    top: 5em;
+    z-index: 1;
+}
+
+form.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2.5em;
+    outline: solid var(--details);
+    background-color: var(--main-color);
+    width: fit-content;
+    height: fit-content;
+    padding: 4.5em 0 2.5em 0;
+    position: relative;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+}
+
+fieldset.formGroup {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+label.formLabel {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 550;
+    color: var(--quaternary-color);
+    text-align: center;
+    cursor: pointer;
+}
+
+div.formInputLogin {
+    margin-left: 2em;
+    margin-right: 2em;
+    position: relative;
+}
+
+input.inputLogin:is([type=email], [type=password]) {
+    border: 2px solid var(--quaternary-color);
+    padding: 1em 1.5em;
+    font-size: 1.5rem;
+    text-align: center;
+    display: inline-block;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+}
+
+input.inputLogin:focus:is([type=email], [type=password]) {
+    outline: none;
+    caret-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+span.formInputError, span.passwordEmptyError {
+    font-size: 1.2em;
+    color: var(--tertiary-color);
+    font-weight: 500;
+    text-align: center;
+    inline-size: 25ch;
+    overflow-wrap: break-word;
+}
+
+span.formInputError {
+    display: none;
+}
+
+.formValidationStatusSuccess, .formValidationStatusError {
+    position: absolute;
+    right: 1em;
+    top: 1.65em;
+    font-size: 1.2em;
+    color: var(--tertiary-color);
+    z-index: 1;
+    opacity: 0;
+}
+
+/* /////////////////////////////////////////////////////////// */
+
+/* VALIDATION SECTION */
+
+input.inputLogin[type=email]:is(:not(:placeholder-shown):valid) + .formValidationStatusSuccess{
+    opacity: 1;
+    color: var(--secondary-color);
+}
+
+input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidationStatusError {
+    opacity: 1;
+    color: var(--tertiary-color);
+}
+
+@supports selector(:has(*)) {
+    fieldset:has(input.inputLogin:focus) label {
+        color: var(--primary-color);
+    }
+    
+    fieldset:has(input.inputLogin[type=email]:is(:not(:placeholder-shown):valid)) > label {
+        color: var(--secondary-color);
+    }
+    
+    fieldset:has(input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid)) > label {
+        color: var(--tertiary-color);
+    }
+    
+    div.formInputLogin:has(input.inputLogin[type=email]:is(:not(:focus)):invalid:not(:placeholder-shown)) + span.formInputError {
+        display: block;
+    }
+}
+
+input.inputLogin[type=email]:is(:not(:placeholder-shown):valid) {
+    border: 2px solid var(--secondary-color);
+    caret-color: var(--secondary-color);
+}
+
+input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) {
+    border: 2px solid var(--tertiary-color);
+    caret-color: var(--tertiary-color);
+}
+
+/* * @note: shake after deselect an input */
+input.inputLogin[type=email]:is(:not(:focus)):invalid:not(:placeholder-shown) {
+    border: 2px solid var(--tertiary-color);
+    caret-color: var(--tertiary-color);
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    25% {
+        transform: translateX(4px);
+    }
+    50% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+/* /////////////////////////////////////////////////////////// */
+
+span.newAccount {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+span.newAccount a {
+    color: var(--tertiary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+span.newAccount a:is(:hover, :active) {
+    text-decoration: underline;
+}
+
+form.form footer.formFooterLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button.formBtnSubmitLogin {
+    border: none;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1em;
+    border-radius: 0.5em;
+    font-size: 1.5rem;
+    background-color: var(--tertiary-color);
+    width: 50%;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+
+button.formBtnSubmitLogin:hover, button.formBtnSubmitLogin:focus {
+    outline: none;
+    transform: scale(1.01);
+    -webkit-transform: scale(1.01);
+    -moz-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    -o-transform: scale(1.01);
+}
