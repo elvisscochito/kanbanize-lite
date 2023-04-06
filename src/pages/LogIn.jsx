@@ -56,8 +56,8 @@ export default function LogIn () {
   return (
     <>
       <div className={login.grid}>
-        <header className={login.formHeader}>
-          <h1>Inicia sesión</h1>
+        <header className={login.header}>
+          <h1>Inicio de sesión</h1>
         </header>
         
         {/* <div className={login.iconContainer}>
@@ -73,8 +73,8 @@ export default function LogIn () {
               <input type="email" className={login.inputLogin} id={`${id}-email`} name="email" placeholder="Correo electrónico" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su correo electrónico institucional.')} autoComplete="true" autoFocus required/>
               <FontAwesomeIcon className={login.formValidationStatusSuccess} icon={faCircleCheck} />
               <FontAwesomeIcon className={login.formValidationStatusError} icon={faTimesCircle} />
+              <span className={login.formInputError}>Debe ingresar su correo electrónico institucional con el que se registro.</span>
             </div>
-            <span className={login.formInputError}>Debe ingresar su correo electrónico institucional con el que se registro.</span>
           </fieldset>
 
           <fieldset className={login.formGroup} id={`${id}-formGroupPassword`}>

@@ -1,0 +1,40 @@
+:root {
+    /* --main-color: #ffffff;
+    --text-color: #000000; */
+
+    --primary-color: #FE921D;
+    --secondary-color: #0DB14B;
+    
+    --success-color: #0DB14B;
+    --error-color: #ED1A3B;
+
+    --bg-color: #f5f5f5;
+    --details: #c0c0c0;
+    --aux: #D9D9D9;
+    --accent-color: #0070F3;
+
+    color-scheme: light dark;
+    accent-color: var(--accent-color);
+}
+
+::selection {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* @media (prefers-color-scheme: light) { */
+    /* body {
+        background-color: var(--bg-color);
+    } */
+
+    /* ::selection {
+        background-color: var(--accent-color);
+        color: hsl(0, 0%, 100%);
+    }
+} */
+
+/* @media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--bg-color);
+    }
+} */

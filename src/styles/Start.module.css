@@ -1,0 +1,41 @@
+div.grid {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+    /* margin-top: 15rem; */
+}
+
+/* div.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.logoContainer img.logo {
+    width: 11em;
+    height: 11em;
+    position: absolute;
+    top: 8em;
+    z-index: 1;
+} */
+
+.start {
+    /* background-color: var(--main-color);
+    outline: solid var(--details);
+    padding: 5.5rem 5rem 3rem 5rem;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem; */
+    /*height: max-content;
+    width: max-content;*/
+    width: 85vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+}
