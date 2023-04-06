@@ -1,0 +1,11 @@
+{
+    "es": {
+        "BtnLogIn": "Iniciar sesión",
+        "LogIn": "Inicio de sesión",
+        "SignUp": "Registrarse"
+    },
+    "en": {
+        "LogIn": "Log In",
+        "SignUp": "Sign Up"
+    }
+}

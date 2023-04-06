@@ -2,13 +2,17 @@ div.grid {
     display: grid;
     place-items: center;
     grid-gap: 4rem;
-    margin-bottom: 2.5rem;
+    height: 100vh;
+    width: 100vw;
+    /* margin-bottom: 2.5rem; */
 }
 
 header.header {
+    display: flex;
+    align-content: flex-start;
+    height: 100%;
     font-size: 1.5em;
     font-weight: 700;
-    text-align: center;
 }
 
 /* div.iconContainer {
@@ -51,13 +55,13 @@ fieldset.formGroup {
 label.formLabel {
     font-size: 1.5em;
     font-weight: 550;
-    color: var(--aux);
+    color: var(--aux-color);
     text-align: center;
 }
 
 input.inputLogin:is([type=email], [type=password]) {
     border: none;
-    border-bottom: 2px solid var(--aux);
+    border-bottom: 2px solid var(--aux-color);
     padding: 1em 1.5em;
     font-size: 1.5rem;
     text-align: center;
@@ -101,9 +105,14 @@ span.formInputError {
 
 /* VALIDATION SECTION */
 
-input.inputLogin[type=email]:is(:not(:placeholder-shown):valid) + .formValidationStatusSuccess{
+input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid) + .formValidationStatusSuccess{
     opacity: 1;
     color: var(--success-color);
+}
+
+input.inputLogin[type=email]:is(:not(:focus):not(:placeholder-shown):valid) + .formValidationStatusSuccess {
+    opacity: 1;
+    color: var(--aux-color);
 }
 
 input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidationStatusError {
@@ -116,7 +125,7 @@ input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidat
         color: var(--accent-color);
     }
     
-    fieldset:has(input.inputLogin[type=email]:is(:not(:placeholder-shown):valid)) > label {
+    fieldset:has(input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid)) > label {
         color: var(--success-color);
     }
     
@@ -129,7 +138,12 @@ input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidat
     }
 }
 
-input.inputLogin[type=email]:is(:not(:placeholder-shown):valid) {
+div.formInputLogin:has(input.inputLogin[type=password]) {
+    display: flex;
+    flex-direction: column;
+}
+
+input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid) {
     border-bottom: 2px solid var(--success-color);
     caret-color: var(--success-color);
 }

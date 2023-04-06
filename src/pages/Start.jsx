@@ -13,7 +13,6 @@ function Start() {
         <LinkButton href="/inicio-de-sesion" text="Iniciar sesión" />
         <LinkButton href="/registro-de-cuenta" text="Registrarse" />
       </div>
-
     </div>
   );
 }

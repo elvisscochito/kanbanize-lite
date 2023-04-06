@@ -6,8 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 export default function LogIn () {
   const apiUrl = 'http://localhost:3000/api/v2'
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [passwordEmptyError, setPasswordEmptyError] = useState(false);
   const form = useRef();
   const id = useId();
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export default function LogIn () {
     console.log(data) */
   }
 
-  /* const handlePassword = (e) => {
+  const handlePassword = (e) => {
     e.preventDefault();
     const password = form.current.password.value;
 
@@ -51,7 +50,7 @@ export default function LogIn () {
     } else {
       setPasswordEmptyError(false);
     }
-  } */
+  }
 
   return (
     <>
@@ -82,12 +81,12 @@ export default function LogIn () {
               <FontAwesomeIcon icon={faLock} />
             </label>
             <div className={login.formInputLogin}>
-              <input type="password" className={login.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ /* onBlur={handlePassword} */ /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required/>
-            </div>
-              {/* {
+              <input type="password" className={login.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ onBlur={handlePassword} /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required/>
+              {
                 passwordEmptyError &&
                 <span className={login.passwordEmptyError}>Debe ingresar su contraseña con la que se registro.</span>
-              } */}
+              }
+            </div>
           </fieldset>
 
           <span className={login.newAccount}>¿No tienes cuenta?, regístrate <br/> <Link to="/registro-de-cuenta">aquí &gt;</Link>.</span>

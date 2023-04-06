@@ -1,9 +1,15 @@
-function SignUp() {
-	return (
-		<>
-		  <h1>Registrarse</h1>
-		</>
-	);
+import Translator from '../components/Translator';
+
+function SignUp({ translation }) {
+  return (
+    <h1>{translation.SignUp}</h1>
+  );
 }
 
-export default SignUp;
+export default function SignUpWrapper() {
+  return (
+    <Translator>
+      <SignUp />
+    </Translator>
+  );
+}
