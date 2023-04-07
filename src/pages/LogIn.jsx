@@ -31,8 +31,11 @@ export default function LogIn () {
     if (data.response !== 'Invalid email or password.') {
       localStorage.setItem('token', data.apikey)
       localStorage.setItem('idUser', data.username);
-      console.log(data.token) //? why this log undefined?
-      /* console.log(data.username) */
+      /* console.log(data.apikey)
+      console.log(data.username) */
+      // console log para ver si se guardan los datos en el local storage
+      /* console.log(localStorage.getItem('token'))
+      console.log(localStorage.getItem('idUser')) */
       navigate('/kanbanize-lite/pagina-principal', { replace: true })
     } else {
       console.log('error')

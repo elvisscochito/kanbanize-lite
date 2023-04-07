@@ -1,4 +1,6 @@
 import { useState, useLayoutEffect } from 'react'
+import styles from '../styles/Home.module.css'
+import { Link } from 'react-router-dom'
 
 const apiUrl = 'http://localhost:3000/api/v2/boards'
 
@@ -17,14 +19,20 @@ function Home () {
     })
   }, [])
 
+  console.log(boards)
+
   return (
     <>
-      <h1>Boards</h1>
-      {boards.map(board => (
-        <div key={board.board_id}>
-          <p>{board.name}</p>
-        </div>
-      ))}
+      <header className={styles.header}>
+        <h1>Boards</h1>
+      </header>
+      <div className={styles.grid}>
+        {boards.map(board => (
+          <div key={board.board_id} className={styles.board}>
+            <Link to={`/kanbanize-lite/board/${board.board_id}`}><span>{board.name}</span></Link>
+          </div>
+        ))}
+      </div>
     </>
   )
 }

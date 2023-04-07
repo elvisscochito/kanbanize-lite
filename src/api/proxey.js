@@ -19,6 +19,16 @@ app.get('/api/v2/boards', async (req, res) => {
   res.json(data)
 })
 
+app.get('/api/v2/boards/:boardId', async (req, res) => {
+  const response = await fetch(`${kanbanizeApiUrl}/boards/${req.params.boardId}`, {
+    headers: {
+      'apiKey': apiKey
+    }
+  })
+  const data = await response.json();
+  res.json(data)
+})
+
 app.post('/api/v2/login', async (req, res) => {
   console.log(req.body)
   const response = await fetch(`${kanbanizeOldApiUrl}/login/format/json`, {

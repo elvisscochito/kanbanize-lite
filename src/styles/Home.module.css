@@ -1,0 +1,27 @@
+header.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* font-size: 1.5em;
+    font-weight: 700; */
+}
+
+div.grid {
+    display: grid;
+    place-items: center;
+    grid-gap: 0.8rem;
+}
+
+div.board {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    background-color: var(--bg-color);
+    color: #000000;
+    border-radius: 0.5rem;
+    width: 85%;
+    padding: 1rem;
+    font-weight: bold;
+    border-bottom: 25px solid var(--accent-color);
+}

@@ -1,7 +1,8 @@
 import LinkButton from '../components/LinkButton';
 import styles from '../styles/Start.module.css';
+import Translator from '../components/Translator';
 
-function Start() {
+function Start({ translation }) {
   return (
     <div className={styles.grid}>
 
@@ -10,11 +11,17 @@ function Start() {
       </div> */}
 
       <div className={styles.start}>
-        <LinkButton href="/inicio-de-sesion" text="Iniciar sesión" />
-        <LinkButton href="/registro-de-cuenta" text="Registrarse" />
+        <LinkButton href="/inicio-de-sesion" text={translation.BtnLogIn} />
+        <LinkButton href="/registro-de-cuenta" text={translation.SignUp} />
       </div>
     </div>
   );
 }
 
-export default Start;
+export default function StartTranslated() {
+  return (
+    <Translator>
+      <Start />
+    </Translator>
+  );
+}
