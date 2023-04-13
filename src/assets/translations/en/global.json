@@ -1,0 +1,13 @@
+{
+    "Translation": {
+        "BtnLogIn": "Log In",
+        "LogIn": "Log In",
+        "SignUp": "Sign Up",
+        "EmailInputError": "Please enter a valid email address",
+        "PasswordInputError": "Please enter your password",
+        "newAccount": "¿Don't have an account?, sign up ",
+        "newAccountHere": "here",
+        "formBtnSubmitLogin": "Continue",
+        "Boards": "Boards"
+    }
+}

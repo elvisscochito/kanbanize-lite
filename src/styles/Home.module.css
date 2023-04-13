@@ -12,9 +12,16 @@ div.grid {
     grid-gap: 0.8rem;
 }
 
+header.boardHeader {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
 div.board {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: left;
     align-items: center;
     background-color: var(--bg-color);
@@ -22,6 +29,21 @@ div.board {
     border-radius: 0.5rem;
     width: 85%;
     padding: 1rem;
-    font-weight: bold;
     border-bottom: 25px solid var(--accent-color);
+    gap: 0.5rem;
+}
+
+div.board a {
+    color: hsl(0, 0%, 0%);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.users {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
 }

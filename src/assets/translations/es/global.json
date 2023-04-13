@@ -1,0 +1,13 @@
+{
+    "Translation": {
+        "BtnLogIn": "Iniciar sesión",
+        "LogIn": "Inicio de sesión",
+        "SignUp": "Registrarse",
+        "EmailInputError": "Por favor, introduzca un correo electrónico válido",
+        "passwordEmptyError": "Por favor, introduzca su contraseña",
+        "newAccount": "¿No tienes cuenta?, regístrate ",
+        "newAccountHere": "aquí",
+        "formBtnSubmitLogin": "Continuar",
+        "Boards": "Tableros"
+    }
+}
