@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,6 +12,7 @@ const apiUrlPrefix = 'http://localhost:3000/api/v2'
 function Board(props) {
     
     const { boardId } = useParams();
+    const option = useRef();
     
     const location = useLocation();
     console.log(location.state.board.structure, " useLocation Hook");
@@ -72,6 +73,8 @@ function Board(props) {
             type: value.type
         }
     })
+
+    console.log("workflowsFilter", workflowsFilter)
     
     const columnsFilter = Object.entries(columns).map(([key, value]) => {
         return {
@@ -81,45 +84,19 @@ function Board(props) {
         }
     })
 
-    /* now merge workflowsFilter and columnsFilter by the same workflow_id and keep key and values of both */
-    /* const workflowsAndColumnsMerged = workflowsFilter.map(workflow => {
-        return {
-            ...workflow,
-            ...columnsFilter.find(column => column.workflow_id === workflow.workflow_id)
-        }
-    }) */
+    console.log("columnsFilter", columnsFilter)
 
-    const workflowsAndColumnsMerged = workflowsFilter.map(workflow => {
+    const workflowsAndColumnsMerged = workflowsFilter.map((workflow)=>{
         return {
             ...workflow,
-            ...columnsFilter.filter(column => column.workflow_id === workflow.workflow_id && column.name)
+            columns: columnsFilter.filter((column)=>column.workflow_id === Number(workflow.workflow_id))
         }
     })
 
-    console.log("merged", workflowsAndColumnsMerged)
+    console.log("workflowsAndColumnsMerged", workflowsAndColumnsMerged)
 
-    console.log("workflowsFilter", workflowsFilter)
-    console.log("columnsFilter", columnsFilter)
-
-    /* clean columns to separate columns with the same workflow_id and their columns*/
-    /* const cleanColumns = columns.reduce((acc, column) => {
-        if (!acc[column.workflow_id]) {
-            acc[column.workflow_id] = {
-                workflow_id: column.workflow_id,
-                columns: []
-            }
-        }
-        acc[column.workflow_id].columns.push(column)
-        return acc
-    }, {})
-    console.log(cleanColumns) */
-
-    /* log the first object and their columns in the object and access the first array in the object */
-    /* console.log(cleanColumns[Object.keys(cleanColumns)[0]].columns[0])
- */
-    /* save the first object and their columns in the object */
-    /* const firstObject = cleanColumns[Object.keys(cleanColumns)[0]].columns
-    console.log(firstObject) */
+    const workflowsAndColumnsCleaned = workflowsAndColumnsMerged.filter(workflow => workflow.type === 0)
+    console.log("workflowsAndColumnsCleaned", workflowsAndColumnsCleaned)
 
     const settings = {
         dots: true,
@@ -154,6 +131,13 @@ function Board(props) {
         );
     }
 
+    const columns2 = [];
+    for (let aux of workflowsAndColumnsCleaned.columns) {
+        columns2 += aux.workflow_id;
+    }
+
+    console.log("columns2", columns2)
+        
     return (
         <>
             <header className={styles.header}>
@@ -161,40 +145,18 @@ function Board(props) {
             </header>
 
             <div className={styles.container}>
+                {/* make a select tag with options based on workflowsAndColumnsCleaned with a default value and onchange to trigger value */}
                 <select>
-                    {
-                        workflowsFilter.map(workflow => (
-                            workflow.type === 0 &&
-                            <option key={workflow.workflow_id} value={workflow.workflow_id}>{workflow.name}</option>
-                        ))
-                    }
+                    {workflowsAndColumnsCleaned.map(workflow => (
+                        <option key={workflow.workflow_id} value={workflow.workflow_id}>{workflow.name}</option>
+                    ))}
                 </select>
                 
                 <Slider {...settings}>
-                    {columnsFilter.map(column => (
-                        <div key={column.column_id} className={styles.column}>
-                            <div className={styles.nameContainer}>
-                                <span className={styles.name}>{column.name}</span>
-                            </div>
-                            <div className={styles.content}>
-                                <span>{column.name}</span>
-                            </div>
-                        </div>
-                    ))}
+                    {
+                        
+                    }
                 </Slider>
-                
-                {/* <Slider {...settings}>
-                    {firstObject.map(column => (
-                        <div key={column.column_id} className={styles.column}>
-                            <div className={styles.nameContainer}>
-                                <span className={styles.name}>{column.name}</span>
-                            </div>
-                            <div className={styles.content}>
-                                <span>{column.name}</span>
-                            </div>
-                        </div>
-                    ))}
-                </Slider> */}
             </div>
        </>
     )

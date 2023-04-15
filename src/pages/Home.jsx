@@ -58,7 +58,7 @@ function Home (props) {
 								board.users.length > 0 &&
 								board.users.map((user) => (
 									<span key={user.user_id}>
-										{user.username}
+										{user.username}&nbsp;
 									</span>
 								))}
 						</div>
