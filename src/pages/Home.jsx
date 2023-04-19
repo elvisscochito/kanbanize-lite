@@ -9,6 +9,7 @@ function Home (props) {
   
   const {t} = useTranslation("global");
   const [boards, setBoards] = useState([])
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchBoardsAndDetails = async () => {
@@ -36,9 +37,27 @@ function Home (props) {
     fetchBoardsAndDetails()
   }, [])
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    console.log(event.target.value);
+  };
+
   if (!boards || boards.length === 0) {
     return <div>Loading...</div>
   }
+
+  const filteredBoards = boards.filter((board) => {
+    const boardNameString = String(board.structure.name).toLowerCase();
+    const usersString = board.users
+      .map((user) => user.username)
+      .join(' ')
+      .toLowerCase();
+
+    return (
+      boardNameString.includes(searchTerm.toLowerCase()) ||
+      usersString.includes(searchTerm.toLowerCase())
+    );
+  });
   
   return (
 		<>
@@ -46,7 +65,15 @@ function Home (props) {
 				<h1>{t("Translation.Boards")}</h1>
 			</header>
 			<div className={styles.grid}>
-				{boards.map((board) => (
+        <div className={styles.search}>
+          <label htmlFor='search'>{t("Translation.Search")}:</label>
+          <input 
+            id='search'
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+				{filteredBoards.map((board) => (
 					<div key={board.board_id} className={styles.board}>
 						<header className={styles.boardHeader}>
 						  <Link to={`/kanbanize-lite/board/${board.board_id}`} state={{ board: board }}>

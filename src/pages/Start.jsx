@@ -6,7 +6,6 @@ import styles from '../styles/Start.module.css';
 function Start() {
   
   const [t, i18n] = useTranslation("global");
-  const language = i18n.language === "en" ? "Change language to: " : "Cambiar idioma a: ";
 
   return (
     <div className={styles.grid}>
@@ -20,10 +19,7 @@ function Start() {
         <LinkButton href="/registro-de-cuenta" text={t("Translation.SignUp")} />
       </div>
 
-      <div className={styles.language}>
-        <span>{language}</span>
-        <ToggleLanguage />
-      </div>
+      <ToggleLanguage />
     </div>
   );
 }

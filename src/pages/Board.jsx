@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,7 +12,6 @@ const apiUrlPrefix = 'http://localhost:3000/api/v2'
 function Board(props) {
     
     const { boardId } = useParams();
-    const option = useRef();
     
     const location = useLocation();
     console.log(location.state.board.structure, " useLocation Hook");
@@ -20,6 +19,12 @@ function Board(props) {
     const [board, setBoard] = useState([])
     const [workflows, setWorkflows] = useState([])
     const [columns, setColumns] = useState([])
+    const [selectedWorkflow, setSelectedWorkflow] = useState(-1);
+
+    const handleChangeWorkflow= (event) => {
+        console.warn(event.target.value)
+        setSelectedWorkflow(event.target.value)
+    }
 
     /* const fetchBoards = async (boardId) => {
         const response = await fetch(apiUrl.replace(':boardId', boardId))
@@ -96,6 +101,7 @@ function Board(props) {
     console.log("workflowsAndColumnsMerged", workflowsAndColumnsMerged)
 
     const workflowsAndColumnsCleaned = workflowsAndColumnsMerged.filter(workflow => workflow.type === 0)
+    
     console.log("workflowsAndColumnsCleaned", workflowsAndColumnsCleaned)
 
     const settings = {
@@ -131,35 +137,61 @@ function Board(props) {
         );
     }
 
-    const columns2 = [];
+    /* const columns2 = [];
     for (let aux of workflowsAndColumnsCleaned.columns) {
         columns2 += aux.workflow_id;
     }
 
-    console.log("columns2", columns2)
+    console.log("columns2", columns2) */
         
     return (
-        <>
-            <header className={styles.header}>
-                <h1>{board.name}</h1>
-            </header>
+		<>
+			<header className={styles.header}>
+				<h1>{board.name}</h1>
+			</header>
 
-            <div className={styles.container}>
-                {/* make a select tag with options based on workflowsAndColumnsCleaned with a default value and onchange to trigger value */}
-                <select>
-                    {workflowsAndColumnsCleaned.map(workflow => (
-                        <option key={workflow.workflow_id} value={workflow.workflow_id}>{workflow.name}</option>
-                    ))}
-                </select>
-                
-                <Slider {...settings}>
-                    {
-                        
-                    }
-                </Slider>
-            </div>
-       </>
-    )
+			<div className={styles.container}>
+				{/* make a select tag with options based on workflowsAndColumnsCleaned with a default value and onchange to trigger value */}
+				<select onChange={handleChangeWorkflow} className={styles.select} /* defaultValue={workflowsAndColumnsCleaned[0].workflow_id} */>
+					<option value={-1}>Select a workflow</option>
+					{workflowsAndColumnsCleaned.map((workflow) => (
+						<option
+							key={workflow.workflow_id}
+							value={workflow.workflow_id}
+						>
+							{workflow.name}
+						</option>
+					))}
+				</select>
+
+				<Slider {...settings}>
+					{selectedWorkflow !== -1 ? (
+						workflowsAndColumnsCleaned
+							.filter(
+								(workflow) =>
+									workflow.workflow_id === selectedWorkflow
+							)
+							.map((workflow) =>
+								workflow.columns.map((column) => (
+									<div className={styles.column}>
+                                        <div className={styles.nameContainer}>
+                                            <span className={styles.name}>
+										        {column.name}
+                                            </span>
+                                        </div>
+                                        <div className={styles.content}>
+                                            <span>{column.name}</span>
+                                        </div>
+									</div>
+								))
+							)
+					) : (
+						<div></div>
+					)}
+				</Slider>
+			</div>
+		</>
+	);
 }
 
 export default Board;

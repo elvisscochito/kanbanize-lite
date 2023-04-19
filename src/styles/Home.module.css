@@ -12,6 +12,28 @@ div.grid {
     grid-gap: 0.8rem;
 }
 
+div.search {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 85%;
+    gap: 0.5rem;
+}
+
+div.search label {
+    font-weight: bold;
+}
+
+div.search input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--bg-color);
+    outline: none;
+}
+
 header.boardHeader {
     width: 100%;
     display: flex;
