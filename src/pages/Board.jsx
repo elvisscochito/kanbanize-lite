@@ -20,10 +20,16 @@ function Board(props) {
     const [workflows, setWorkflows] = useState([])
     const [columns, setColumns] = useState([])
     const [selectedWorkflow, setSelectedWorkflow] = useState(-1);
+    const [cards, setCards] = useState([])
 
     const handleChangeWorkflow= (event) => {
         console.warn(event.target.value)
         setSelectedWorkflow(event.target.value)
+    }
+
+    const fetchCards = async (boardId) => {
+        const response = await fetch(`${apiUrl}/cards`.replace(':boardId', boardId))
+        return await response.json()
     }
 
     /* const fetchBoards = async (boardId) => {
@@ -66,6 +72,14 @@ function Board(props) {
     }, [location.state.board.structure.columns])
 
     console.log("columns", columns)
+
+    useLayoutEffect(() => {
+        fetchCards(boardId).then(({ data }) => {
+            setCards(data.data)
+        })
+    }, [boardId])
+
+    console.log("cards", cards)
     
     if (!board || !columns || columns.length === 0) {
         return <div>Loading...</div>
@@ -173,14 +187,25 @@ function Board(props) {
 							)
 							.map((workflow) =>
 								workflow.columns.map((column) => (
-									<div className={styles.column}>
+									<div className={styles.column} key={column.column_id}>
                                         <div className={styles.nameContainer}>
                                             <span className={styles.name}>
 										        {column.name}
                                             </span>
                                         </div>
                                         <div className={styles.content}>
-                                            <span>{column.name}</span>
+                                            {cards.map((card) => (
+                                                card.column_id == column.column_id ? (
+                                                    <div className={styles.card} key={card.card_id}>
+                                                        <header className={styles.cardHeader}><h3>{card.title}</h3></header>
+                                                        <div>
+                                                            <p>{card.description}</p>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div></div>
+                                                )
+                                            ))}
                                         </div>
 									</div>
 								))

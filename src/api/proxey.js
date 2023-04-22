@@ -94,6 +94,19 @@ app.get("/api/v2/boards/:boardId/columns", async (req, res) => {
 	res.json(data);
 });
 
+app.get("/api/v2/boards/:boardId/cards", async (req, res) => {
+	const response = await fetch(
+		`${kanbanizeApiUrl}/cards?board_ids=${req.params.boardId}&fields=card_id,title,description,owner_user_id,deadline,board_id,workflow_id,column_id,comment_count`,
+		{
+			headers: {
+				apiKey: apiKey,
+			},
+		}
+	);
+	const data = await response.json();
+	res.json(data);
+});
+
 /* app.get('/api/v2/boards/:boardId/userRoles', async (req, res) => {
   const response = await fetch(`${kanbanizeApiUrl}/boards/${req.params.boardId}/userRoles`, {
     headers: {
