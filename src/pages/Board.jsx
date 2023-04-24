@@ -187,6 +187,8 @@ function Board(props) {
     const filteredCards = cardsFormatDate.filter((card) => {
         const cardTitle = card.title.toLowerCase();
         /* const cardDescription = card.description?.toLowerCase(); */
+        /* or maybe change the default value from null to none and hide it */
+        /* const cardDescription = card.description ? card.description.toLowerCase() : null; */
 
         return (
             cardTitle.includes(searchTerm.toLowerCase()) /* || cardDescription.includes(searchTerm.toLowerCase()) */
