@@ -74,12 +74,34 @@ div.content {
     gap: 1rem;
     width: 100%;
     height: 100%;
-    /* padding: 1rem; */
+    padding: 1rem 0;
     background-color: var(--bg-color);
     color: hsl(0, 0%, 0%);
     border-radius: 0.5rem;
     overflow-y: auto;
     scroll-snap-align: start;
+}
+
+div.search {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 85%;
+    gap: 0.5rem;
+}
+
+div.search label {
+    font-weight: bold;
+}
+
+div.search input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: hsl(0, 0%, 100%);
+    outline: none;
 }
 
 div.card {
@@ -95,5 +117,21 @@ div.card {
 }
 
 header.cardHeader {
+    width: 100%;
+}
+
+div.cardBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+div.cardDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }

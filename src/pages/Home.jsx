@@ -5,9 +5,9 @@ import styles from '../styles/Home.module.css';
 
 const apiUrlPrefix = 'http://localhost:3000/api/v2'
 
-function Home (props) {
-  
-  const {t} = useTranslation("global");
+function Home(props) {
+
+  const { t } = useTranslation("global");
   const [boards, setBoards] = useState([])
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -16,9 +16,9 @@ function Home (props) {
       let response = await fetch(`${apiUrlPrefix}/boards`)
       const boardsResponse = await response.json()
       console.log(boardsResponse, "boardsResponse")
-   
+
       const boards = []
-      for await(let board of boardsResponse.data) {
+      for await (let board of boardsResponse.data) {
         console.log(`${apiUrlPrefix}/${board.board_id}`)
         response = await fetch(`${apiUrlPrefix}/usersByBoard/${board.board_id}`)
         const users = await response.json()
@@ -58,41 +58,41 @@ function Home (props) {
       usersString.includes(searchTerm.toLowerCase())
     );
   });
-  
+
   return (
-		<>
-			<header className={styles.header}>
-				<h1>{t("Translation.Boards")}</h1>
-			</header>
-			<div className={styles.grid}>
+    <>
+      <header className={styles.header}>
+        <h1>{t("Translation.Boards")}</h1>
+      </header>
+      <div className={styles.grid}>
         <div className={styles.search}>
           <label htmlFor='search'>{t("Translation.Search")}:</label>
-          <input 
+          <input
             id='search'
             value={searchTerm}
             onChange={handleSearchChange}
           />
         </div>
-				{filteredBoards.map((board) => (
-					<div key={board.board_id} className={styles.board}>
-						<header className={styles.boardHeader}>
-						  <Link to={`/kanbanize-lite/board/${board.board_id}`} state={{ board: board }}>
-								<h3>{board.structure.name}</h3>
-						  </Link>
-						</header>
-						<div className={styles.users}>
-							{board.users &&
-								board.users.length > 0 &&
-								board.users.map((user) => (
-									<span key={user.user_id}>
-										{user.username}&nbsp;
-									</span>
-								))}
-						</div>
-					</div>
-				))}
-			</div>
-		</>
+        {filteredBoards.map((board) => (
+          <div key={board.board_id} className={styles.board}>
+            <header className={styles.boardHeader}>
+              <Link to={`/kanbanize-lite/board/${board.board_id}`} state={{ board: board }}>
+                <h3>{board.structure.name}</h3>
+              </Link>
+            </header>
+            <div className={styles.users}>
+              {board.users &&
+                board.users.length > 0 &&
+                board.users.map((user) => (
+                  <span key={user.user_id}>
+                    {user.username}&nbsp;
+                  </span>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
