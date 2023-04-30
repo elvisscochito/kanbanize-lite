@@ -9,6 +9,7 @@
         "newAccountHere": "aquí",
         "formBtnSubmitLogin": "Continuar",
         "Boards": "Tableros",
-        "Search": "Buscar"
+        "Search": "Buscar",
+        "SearchPlaceholder": "Titulo, descripción, fecha límite, propietario..."
     }
 }

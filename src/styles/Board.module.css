@@ -104,6 +104,20 @@ div.search input {
     outline: none;
 }
 
+div.btnCreateCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+}
+
+button.submitBtn {
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: var(--accent-color);
+    color: hsl(0, 0%, 100%);
+}
+
 div.card {
     display: flex;
     flex-direction: column;

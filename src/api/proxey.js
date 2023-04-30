@@ -4,7 +4,7 @@ import express from "express";
 const app = express();
 app.use(cors());
 app.use(express.json());
-const port = 3000;
+const port = process.env.PORT || 3000;
 const kanbanizeApiUrl = "https://university6y.kanbanize.com/api/v2";
 const kanbanizeOldApiUrl =
 	"https://university6y.kanbanize.com/index.php/api/kanbanize";
@@ -24,6 +24,22 @@ app.post("/api/v2/login", async (req, res) => {
 	const data = await response.json();
 	res.json(data);
 });
+
+/* app.post("/api/v2/login", async (req, res) => {
+	const response = await fetch(`${kanbanizeApiUrl}/cards`, {
+		method: "POST",
+		headers: {
+			apiKey: apiKey,
+			"Content-Type": "aplication/json"
+		},
+		body: JSON.stringify({
+			title: req.body.email,
+			description: req.body.email
+		}),
+	});
+	const data = await response.json();
+	res.json(data)
+}) */
 
 app.get("/api/v2/boards", async (req, res) => {
 	const response = await fetch(
@@ -109,9 +125,9 @@ app.get("/api/v2/boards/:boardId/cards", async (req, res) => {
 
 /* app.get('/api/v2/boards/:boardId/userRoles', async (req, res) => {
   const response = await fetch(`${kanbanizeApiUrl}/boards/${req.params.boardId}/userRoles`, {
-    headers: {
-      'apiKey': apiKey
-    }
+	headers: {
+	  'apiKey': apiKey
+	}
   })
   const data = await response.json()
   res.json(data)
@@ -120,9 +136,9 @@ app.get("/api/v2/boards/:boardId/cards", async (req, res) => {
 /* // "https://university6y.kanbanize.com/api/v2/users?user_ids=2,6,10,19"
 app.get('/api/v2/users', async (req, res) => {
   const response = await fetch(`${kanbanizeApiUrl}/users?user_ids=${req.query.user_ids}`, {
-    headers: {
-      'apiKey': apiKey
-    }
+	headers: {
+	  'apiKey': apiKey
+	}
   })
   const data = await response.json()
   res.json(data)

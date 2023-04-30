@@ -1,4 +1,4 @@
-import { useLayoutEffect, useId, useState } from 'react';
+import { useLayoutEffect, useId, /* useRef, */ useState, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -6,15 +6,14 @@ import 'slick-carousel/slick/slick.css';
 import styles from '../styles/Board.module.css';
 import { useTranslation } from 'react-i18next';
 
-const apiUrl = 'http://localhost:3000/api/v2/boards/:boardId'
-
-const apiUrlPrefix = 'http://localhost:3000/api/v2'
+const apiUrl = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com/boards/:boardId'
 
 function Board(props) {
 
     const { boardId } = useParams();
     const { t } = useTranslation("global");
     const id = useId();
+    /* const form = useRef(); */
 
     const location = useLocation();
     console.log(location.state.board.structure, " useLocation Hook");
@@ -186,12 +185,16 @@ function Board(props) {
 
     const filteredCards = cardsFormatDate.filter((card) => {
         const cardTitle = card.title.toLowerCase();
-        /* const cardDescription = card.description?.toLowerCase(); */
         /* or maybe change the default value from null to none and hide it */
-        /* const cardDescription = card.description ? card.description.toLowerCase() : null; */
+        const cardDescription = card.description ? card.description.toLowerCase() : "";
+        /* const commentCount = card.comment_count ? card.comment_count.toLowerCase() : ""; */
+        const cardDeadline = card.deadline ? card.deadline.toLowerCase() : "";
+
+        /* const user = users.find((user) => user.user_id === card.owner_user_id);
+        const cardUser = user.username ? user.username.toLowerCase() : ""; */
 
         return (
-            cardTitle.includes(searchTerm.toLowerCase()) /* || cardDescription.includes(searchTerm.toLowerCase()) */
+            cardTitle.includes(searchTerm.toLowerCase()) || cardDescription.includes(searchTerm.toLowerCase() /* || commentCount.includes(searchTerm.toLowerCase()) */ /* || cardDeadline.includes(searchTerm.toLowerCase()) */ /* || cardUser.includes(searchTerm.toLowerCase()) */)
         );
     });
 
@@ -238,8 +241,17 @@ function Board(props) {
                                                     id={`${id}-search`}
                                                     value={searchTerm}
                                                     onChange={handleSearchChange}
+                                                    placeholder={t("Translation.SearchPlaceholder")}
                                                 />
                                             </div>
+
+                                            {
+                                                column.name == "Backlog" &&
+                                                <div className={styles.btnCreateCard}>
+                                                    {/* copilot do a button to create a card */}
+                                                    <button type="submit" className={styles.submitBtn}>Create new card</button>
+                                                </div>
+                                            }
 
                                             {filteredCards.map((card) => (
                                                 card.column_id == column.column_id ? (

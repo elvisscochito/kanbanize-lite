@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import login from '../styles/LogIn.module.css';
 
-export default function LogIn () {
-  const {t} = useTranslation("global");
+export default function LogIn() {
+  const { t } = useTranslation("global");
 
-  const apiUrl = 'http://localhost:3000/api/v2'
+  const apiUrl = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com'
   const [passwordEmptyError, setPasswordEmptyError] = useState(false);
   const form = useRef();
   const id = useId();
@@ -22,14 +22,14 @@ export default function LogIn () {
       password: form.current.password.value
     })
 
-    const response = await fetch(apiUrl+"/login", {
+    const response = await fetch(apiUrl + "/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: formData
     })
-    
+
     const data = await response.json() // user info data
     if (data.response !== 'Invalid email or password.') {
       localStorage.setItem('token', data.apikey)
@@ -51,7 +51,7 @@ export default function LogIn () {
     e.preventDefault();
     const password = form.current.password.value;
 
-    if(password === '') {
+    if (password === '') {
       setPasswordEmptyError(true);
     } else {
       setPasswordEmptyError(false);
@@ -64,18 +64,18 @@ export default function LogIn () {
         <header className={login.header}>
           <h1>{t("Translation.BtnLogIn")}</h1>
         </header>
-        
+
         {/* <div className={login.iconContainer}>
           <Link to="/"><img className={login.iconLogin} src={icon} alt="Icon"/></Link>
         </div> */}
-        
+
         <form className={login.form} ref={form} onSubmit={handleSubmit}>
           <fieldset className={login.formGroup} id={`${id}-formGroupEmail`}>
             <label className={login.formLabel} htmlFor={`${id}-email`}>
               <FontAwesomeIcon icon={faEnvelope} />
             </label>
             <div className={login.formInputLogin}>
-              <input type="email" className={login.inputLogin} id={`${id}-email`} name="email" placeholder="Correo electrónico" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su correo electrónico institucional.')} autoComplete="true" autoFocus required/>
+              <input type="email" className={login.inputLogin} id={`${id}-email`} name="email" placeholder="Correo electrónico" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su correo electrónico institucional.')} autoComplete="true" autoFocus required />
               <FontAwesomeIcon className={login.formValidationStatusSuccess} icon={faCircleCheck} />
               <FontAwesomeIcon className={login.formValidationStatusError} icon={faTimesCircle} />
               <span className={login.formInputError}>{t("Translation.EmailInputError")}</span>
@@ -87,7 +87,7 @@ export default function LogIn () {
               <FontAwesomeIcon icon={faLock} />
             </label>
             <div className={login.formInputLogin}>
-              <input type="password" className={login.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ onBlur={handlePassword} /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required/>
+              <input type="password" className={login.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ onBlur={handlePassword} /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required />
               {
                 passwordEmptyError &&
                 <span className={login.passwordEmptyError}>{t("Translation.PasswordInputError")}</span>
@@ -95,7 +95,7 @@ export default function LogIn () {
             </div>
           </fieldset>
 
-          <span className={login.newAccount}>{t("Translation.newAccount")} <br/> <Link to="/registro-de-cuenta">{t("Translation.newAccountHere")} &gt;</Link>.</span>
+          <span className={login.newAccount}>{t("Translation.newAccount")} <br /> <Link to="/registro-de-cuenta">{t("Translation.newAccountHere")} &gt;</Link>.</span>
 
           <footer className={login.formFooterLogin}>
             <button className={login.formBtnSubmitLogin} type="submit">{t("Translation.formBtnSubmitLogin")}</button>

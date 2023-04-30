@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Home.module.css';
 
-const apiUrlPrefix = 'http://localhost:3000/api/v2'
+const apiUrlPrefix = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com'
 
 function Home(props) {
 

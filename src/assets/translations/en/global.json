@@ -9,6 +9,7 @@
         "newAccountHere": "here",
         "formBtnSubmitLogin": "Continue",
         "Boards": "Boards",
-        "Search": "Search"
+        "Search": "Search",
+        "SearchPlaceholder": "Title, description, deadline, card owner..."
     }
 }
