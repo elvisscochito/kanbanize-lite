@@ -1,4 +1,4 @@
-button {
+button.toggleLanguage {
     background-color: var(--bg-color);
     border: none;
     color: #000;

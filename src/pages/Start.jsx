@@ -4,7 +4,7 @@ import ToggleLanguage from '../components/ToggleLanguage';
 import styles from '../styles/Start.module.css';
 
 function Start() {
-  
+
   const [t, i18n] = useTranslation("global");
 
   return (

@@ -2,27 +2,35 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Home.module.css';
-
-const apiUrlPrefix = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com'
+import apiUrlPrefix from '../config/apiUrlPrefix';
 
 function Home(props) {
-
   const { t } = useTranslation("global");
   const [boards, setBoards] = useState([])
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchBoardsAndDetails = async () => {
-      let response = await fetch(`${apiUrlPrefix}/boards`)
+      let response = await fetch(`${apiUrlPrefix}/board`, {
+        method: 'GET',
+        headers: {
+          'apikey': localStorage.getItem('apikey')
+        }
+      })
       const boardsResponse = await response.json()
       console.log(boardsResponse, "boardsResponse")
 
       const boards = []
       for await (let board of boardsResponse.data) {
         console.log(`${apiUrlPrefix}/${board.board_id}`)
-        response = await fetch(`${apiUrlPrefix}/usersByBoard/${board.board_id}`)
+        response = await fetch(`${apiUrlPrefix}/usersByBoard/${board.board_id}`, {
+          method: 'GET',
+          headers: {
+            'apikey': localStorage.getItem('apikey')
+          }
+        })
         const users = await response.json()
-        console.log(users)
+        console.log(users, "users")
         board = {
           ...board,
           users: users.data
@@ -42,8 +50,10 @@ function Home(props) {
     console.log(event.target.value);
   };
 
-  if (!boards || boards.length === 0) {
+  if (!boards) {
     return <div>Loading...</div>
+  } else if (boards.length === 0) {
+    return <div>No boards found</div>
   }
 
   const filteredBoards = boards.filter((board) => {

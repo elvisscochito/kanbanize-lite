@@ -2,15 +2,16 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "proxey.js",
+  "main": "proxy.js",
   "type": "module",
   "scripts": {
-    "start": "node proxey.js",
+    "start": "node proxy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
   },
   "author": "",
   "license": "ISC"

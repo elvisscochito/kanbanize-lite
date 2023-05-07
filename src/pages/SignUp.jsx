@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 function SignUp() {
-  const {t} = useTranslation("global");
+  const { t } = useTranslation("global");
 
   return (
     <>
@@ -16,9 +16,9 @@ export default SignUp
 
 function SignUp({ translation }) {
   return (
-	<>
-    	<h1>{translation.SignUp}</h1>
-	</>
+  <>
+      <h1>{translation.SignUp}</h1>
+  </>
   );
 }
 

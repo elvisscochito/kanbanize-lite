@@ -4,11 +4,10 @@ import React, { useId, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import login from '../styles/LogIn.module.css';
+import apiUrlPrefix from '../config/apiUrlPrefix';
 
 export default function LogIn() {
   const { t } = useTranslation("global");
-
-  const apiUrl = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com'
   const [passwordEmptyError, setPasswordEmptyError] = useState(false);
   const form = useRef();
   const id = useId();
@@ -22,7 +21,7 @@ export default function LogIn() {
       password: form.current.password.value
     })
 
-    const response = await fetch(apiUrl + "/login", {
+    const response = await fetch(`${apiUrlPrefix}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -31,14 +30,24 @@ export default function LogIn() {
     })
 
     const data = await response.json() // user info data
+    console.log(data)
     if (data.response !== 'Invalid email or password.') {
-      localStorage.setItem('token', data.apikey)
-      localStorage.setItem('idUser', data.username);
+
+      if (localStorage.getItem('username') !== null) {
+        localStorage.removeItem('apikey')
+        localStorage.removeItem('username')
+      } else {
+        localStorage.setItem('apikey', data.apikey)
+        localStorage.setItem('username', data.username);
+        /* alert(localStorage.getItem('apikey')) */
+        console.warn(localStorage.getItem('username'))
+      }
+
       /* console.log(data.apikey)
       console.log(data.username) */
       // console log para ver si se guardan los datos en el local storage
-      /* console.log(localStorage.getItem('token'))
-      console.log(localStorage.getItem('idUser')) */
+      /* console.log(localStorage.getItem('apikey'))
+      console.log(localStorage.getItem('username')) */
       navigate('/kanbanize-lite/pagina-principal', { replace: true })
     } else {
       console.log('error')

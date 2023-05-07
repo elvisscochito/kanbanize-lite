@@ -5,8 +5,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import styles from '../styles/Board.module.css';
 import { useTranslation } from 'react-i18next';
-
-const apiUrl = 'https://dkgqgo32e1.execute-api.us-east-1.amazonaws.com/boards/:boardId'
+import apiUrlPrefix from '../config/apiUrlPrefix';
+import Modal from '../components/Modal';
 
 function Board(props) {
 
@@ -32,17 +32,22 @@ function Board(props) {
     }
 
     const fetchCards = async (boardId) => {
-        const response = await fetch(`${apiUrl}/cards`.replace(':boardId', boardId))
+        const response = await fetch(`${apiUrlPrefix}/board/${boardId}/cards`, {
+            method: 'GET',
+            headers: {
+                'apikey': localStorage.getItem('apikey')
+            }
+        })
         return await response.json()
     }
 
     /* const fetchBoards = async (boardId) => {
-        const response = await fetch(apiUrl.replace(':boardId', boardId))
+        const response = await fetch(apiUrlPrefix.replace(':boardId', boardId))
         return await response.json()
     }
 
     const fetchColumns = async (boardId) => {
-        const response = await fetch(`${apiUrl}/columns`.replace(':boardId', boardId))
+        const response = await fetch(`${apiUrlPrefix}/columns`.replace(':boardId', boardId))
         return await response.json()
     } */
 
@@ -92,8 +97,6 @@ function Board(props) {
             description: value.description ? value.description.replace(/<p>/g, '').replace(/<\/p>/g, '') : null
         }
     })
-
-    console.warn("cardsFormatDate", cardsFormatDate)
 
     useLayoutEffect(() => {
         setUsers(location.state.board.users)
@@ -248,8 +251,8 @@ function Board(props) {
                                             {
                                                 column.name == "Backlog" &&
                                                 <div className={styles.btnCreateCard}>
-                                                    {/* copilot do a button to create a card */}
                                                     <button type="submit" className={styles.submitBtn}>Create new card</button>
+                                                    <Modal />
                                                 </div>
                                             }
 
