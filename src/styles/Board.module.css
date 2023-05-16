@@ -111,20 +111,6 @@ div.btnCreateCard {
     width: 90%;
 }
 
-button.submitBtn {
-    font-weight: bold;
-    font-size: 1rem;
-    background-color: var(--accent-color);
-    color: hsl(0, 0%, 100%);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    -webkit-border-radius: 0.5rem;
-    -moz-border-radius: 0.5rem;
-    -ms-border-radius: 0.5rem;
-    -o-border-radius: 0.5rem;
-}
-
 div.card {
     display: flex;
     flex-direction: column;

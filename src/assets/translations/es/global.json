@@ -10,6 +10,13 @@
         "formBtnSubmitLogin": "Continuar",
         "Boards": "Tableros",
         "Search": "Buscar",
-        "SearchPlaceholder": "Titulo, descripción, fecha límite, propietario..."
+        "SearchPlaceholder": "Titulo, descripción, fecha límite, propietario...",
+        "createNewCard": "Crear una nueva tarjeta",
+        "createCard": "Crear tarjeta",
+        "CardTitle": "Título",
+        "CardTitlePlaceholder": "Título de la tarjeta",
+        "CardDescription": "Descripción",
+        "CardDescriptionPlaceholder": "Descripción de la tarjeta",
+        "CardCancel": "Cancelar"
     }
 }

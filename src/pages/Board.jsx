@@ -1,4 +1,4 @@
-import { useLayoutEffect, useId, /* useRef, */ useState, useRef } from 'react';
+import { useLayoutEffect, useId, /* useRef, */ useState, useReducer, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,6 +13,7 @@ function Board(props) {
     const { boardId } = useParams();
     const { t } = useTranslation("global");
     const id = useId();
+    const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
     /* const form = useRef(); */
 
     const location = useLocation();
@@ -86,7 +87,7 @@ function Board(props) {
         fetchCards(boardId).then(({ data }) => {
             setCards(data.data)
         })
-    }, [boardId])
+    }, [reducerValue])
 
     console.log("cards", cards)
 
@@ -251,8 +252,7 @@ function Board(props) {
                                             {
                                                 column.name == "Backlog" &&
                                                 <div className={styles.btnCreateCard}>
-                                                    <button type="submit" className={styles.submitBtn}>Create new card</button>
-                                                    <Modal />
+                                                    <Modal column_id={column.column_id} lane_id={workflow.workflow_id} forceUpdate={forceUpdate} />
                                                 </div>
                                             }
 

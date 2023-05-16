@@ -78,3 +78,21 @@ export const getCards = async (req, res) => {
     const data = await response.json();
     res.json(data);
 }
+
+export const postCard = async (req, res) => {
+    const response = await fetch(`${newKanbanizeApiUrl}/cards`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            apiKey: req.headers.apikey
+        },
+        body: JSON.stringify({
+            column_id: req.body.column_id,
+            lane_id: req.body.lane_id,
+            title: req.body.title,
+            description: req.body.description
+        }),
+    });
+    const data = await response.json();
+    res.json(data);
+}

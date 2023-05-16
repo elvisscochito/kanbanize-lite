@@ -16,6 +16,9 @@ export default function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    const email = localStorage.setItem('email', form.current.email.value);
+    const password = localStorage.setItem('password', form.current.password.value);
+
     const formData = JSON.stringify({
       email: form.current.email.value,
       password: form.current.password.value

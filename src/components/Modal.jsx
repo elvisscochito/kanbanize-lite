@@ -1,7 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useId } from 'react';
+import styles from './Modal.module.css';
+import { useTranslation } from 'react-i18next';
+import apiUrlPrefix from '../config/apiUrlPrefix';
 
-const Modal = () => {
+const Modal = ({ column_id, lane_id, forceUpdate }) => {
+    /* const apiUrlPrefix = 'http://localhost:3000/board:boardId/card'; */
     const dialog = useRef(null);
+    const form = useRef();
+    const id = useId();
+    const { t } = useTranslation("global");
 
     const showModal = () => {
         dialog.current.showModal()
@@ -11,17 +18,59 @@ const Modal = () => {
         dialog.current.close()
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const formData = JSON.stringify({
+            column_id: column_id,
+            lane_id: lane_id,
+            title: form.current.title.value,
+            description: form.current.description.value
+        })
+
+        const board_id = 15;
+
+        const response = await fetch(`http://localhost:3000/board/${board_id}/card`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': localStorage.getItem('apikey')
+            },
+            body: formData
+        })
+
+        const data = await response.json() // user info data
+        console.log(data)
+        forceUpdate()
+        //if data OK
+        //setCards(prev => {
+        //   return [...prev, nuevo]
+        //})
+    }
+
     return (
         <>
-            <button onClick={showModal}>Show modal</button>
+            <button onClick={showModal} className={`${styles.normalBtn} ${styles.newCardBtn}`}>{t("Translation.createNewCard")}</button>
             <dialog ref={dialog}>
                 <header>
-                    <h1>Modal</h1>
+                    <h1></h1>
                 </header>
-                <p>Body</p>
-                <footer>
-                    <button onClick={hideModal}>Close</button>
-                </footer>
+                <form className={styles.form} ref={form} onSubmit={handleSubmit}>
+                    <fieldset className={styles.formGroup}>
+                        <label className={styles.formLabel} htmlFor={`${id}-cardTitle`}>{t("Translation.CardTitle")}:</label>
+                        <input type='text' className={styles.input} id={`${id}-cardTitle`} name='title' placeholder={t("Translation.CardTitlePlaceholder")} required />
+                    </fieldset>
+
+                    <fieldset className={styles.formGroup}>
+                        <label className={styles.formLabel} htmlFor={`${id}-cardDescription`}>{t("Translation.CardDescription")}:</label>
+                        <input type='text' className={styles.input} id={`${id}-cardDescription`} name='description' placeholder={t("Translation.CardDescriptionPlaceholder")} required />
+                    </fieldset>
+
+                    <footer className={styles.formFooter}>
+                        <button type='button' onClick={hideModal} className={`${styles.normalBtn} ${styles.cancelBtn}`}>{t("Translation.CardCancel")}</button>
+                        <button type='submit' onClick={hideModal} className={`${styles.normalBtn} ${styles.submitBtn}`}>{t("Translation.createCard")}</button>
+                    </footer>
+                </form>
             </dialog>
         </>
     );

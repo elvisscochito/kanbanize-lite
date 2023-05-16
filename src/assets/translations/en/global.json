@@ -10,6 +10,13 @@
         "formBtnSubmitLogin": "Continue",
         "Boards": "Boards",
         "Search": "Search",
-        "SearchPlaceholder": "Title, description, deadline, card owner..."
+        "SearchPlaceholder": "Title, description, deadline, card owner...",
+        "createNewCard": "Create a new card",
+        "createCard": "Create card",
+        "CardTitle": "Title",
+        "CardTitlePlaceholder": "Title",
+        "CardDescription": "Description",
+        "CardDescriptionPlaceholder": "Description",
+        "CardCancel": "Cancel"
     }
 }

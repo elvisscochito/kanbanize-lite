@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 /** @note validate the config password */
-app.set("key", key);
+/* app.set("key", key); */
 
 /** @note routes */
 app.use('/', logIn);
