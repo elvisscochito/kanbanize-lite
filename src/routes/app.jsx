@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Start from "../pages/Start";
-import SignUp from "../pages/SignUp";
+import ProtectedRoute from '../components/ProtectedRoute';
 import LogIn from "../pages/LogIn";
-import ProtectedRoute from '../components/ProtectedRoute'
+import SignUp from "../pages/SignUp";
+import Start from "../pages/Start";
 /* import Layout from '../components/Layout'; */
-import Home from "../pages/Home";
 import Board from "../pages/Board";
+import Home from "../pages/Home";
+import PageNotFound from "../pages/PageNotFound";
 
 function AppRouter() {
 	return (
@@ -37,7 +38,7 @@ function AppRouter() {
 							}
 						/>
 					</Route>
-					{/* <Route path="*" element={<PageNotFound />} /> */}
+					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 			</BrowserRouter>
 		</>

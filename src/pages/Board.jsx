@@ -1,12 +1,13 @@
-import { useLayoutEffect, useId, /* useRef, */ useState, useReducer, useRef } from 'react';
+import { useId, useLayoutEffect, useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import styles from '../styles/Board.module.css';
-import { useTranslation } from 'react-i18next';
-import apiUrlPrefix from '../config/apiUrlPrefix';
 import Modal from '../components/Modal';
+import ModalDialog from '../components/ModalDialog';
+import apiUrlPrefix from '../config/apiUrlPrefix';
+import styles from '../styles/Board.module.css';
 
 function Board(props) {
 
@@ -14,11 +15,7 @@ function Board(props) {
     const { t } = useTranslation("global");
     const id = useId();
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0);
-    /* const form = useRef(); */
-
     const location = useLocation();
-    console.log(location.state.board.structure, " useLocation Hook");
-
     const [board, setBoard] = useState([])
     const [workflows, setWorkflows] = useState([])
     const [columns, setColumns] = useState([])
@@ -26,70 +23,49 @@ function Board(props) {
     const [cards, setCards] = useState([])
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+    /* const [showModal, setShowModal] = useState(false);
+    const [selectedCardId, setSelectedCardId] = useState(null); */
+
+    /* const [card, setCard] = useState({
+        card_id: null,
+        title: "",
+        description: "",
+        comment_count: 0,
+    }); */
+
+
+    useLayoutEffect(() => {
+        setBoard(location.state.board.structure)
+        setWorkflows(location.state.board.structure.workflows)
+        setColumns(location.state.board.structure.columns)
+        setUsers(location.state.board.users)
+    }, [location.state.board.structure])
 
     const handleChangeWorkflow = (event) => {
-        console.warn(event.target.value)
         setSelectedWorkflow(event.target.value)
     }
 
     const fetchCards = async (boardId) => {
-        const response = await fetch(`${apiUrlPrefix}/board/${boardId}/cards`, {
-            method: 'GET',
-            headers: {
-                'apikey': localStorage.getItem('apikey')
-            }
-        })
-        return await response.json()
+        try {
+            const response = await fetch(`${apiUrlPrefix}/board/${boardId}/cards`, {
+                method: 'GET',
+                headers: {
+                    'apikey': localStorage.getItem('apikey'),
+                    'domain': localStorage.getItem('domain')
+                }
+            })
+            return await response.json()
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
-
-    /* const fetchBoards = async (boardId) => {
-        const response = await fetch(apiUrlPrefix.replace(':boardId', boardId))
-        return await response.json()
-    }
-
-    const fetchColumns = async (boardId) => {
-        const response = await fetch(`${apiUrlPrefix}/columns`.replace(':boardId', boardId))
-        return await response.json()
-    } */
-
-
-    /* useLayoutEffect(() => {
-        fetchBoards(boardId).then(({ data }) => {
-            setBoard(data)
-        })
-    }, [boardId])
-
-    useLayoutEffect(() => {
-        fetchColumns(boardId).then(({ data }) => {
-            setColumns(data)
-        })
-    }, [boardId]) */
-
-    useLayoutEffect(() => {
-        setBoard(location.state.board.structure)
-    }, [location.state.board.structure])
-
-    console.log("board", board)
-
-    useLayoutEffect(() => {
-        setWorkflows(location.state.board.structure.workflows)
-    }, [location.state.board.structure.workflows])
-
-    console.log("workflows", workflows)
-
-    useLayoutEffect(() => {
-        setColumns(location.state.board.structure.columns)
-    }, [location.state.board.structure.columns])
-
-    console.log("columns", columns)
 
     useLayoutEffect(() => {
         fetchCards(boardId).then(({ data }) => {
             setCards(data.data)
         })
     }, [reducerValue])
-
-    console.log("cards", cards)
 
     const cardsFormatDate = Object.entries(cards).map(([key, value]) => {
         return {
@@ -99,16 +75,6 @@ function Board(props) {
         }
     })
 
-    useLayoutEffect(() => {
-        setUsers(location.state.board.users)
-    }, [location.state.board.users])
-
-    console.log("users", users)
-
-    if (!board || !columns || columns.length === 0) {
-        return <div>Loading...</div>
-    }
-
     const workflowsFilter = Object.entries(workflows).map(([key, value]) => {
         return {
             workflow_id: key,
@@ -116,8 +82,6 @@ function Board(props) {
             type: value.type
         }
     })
-
-    console.log("workflowsFilter", workflowsFilter)
 
     const columnsFilter = Object.entries(columns).map(([key, value]) => {
         return {
@@ -127,8 +91,6 @@ function Board(props) {
         }
     })
 
-    console.log("columnsFilter", columnsFilter)
-
     const workflowsAndColumnsMerged = workflowsFilter.map((workflow) => {
         return {
             ...workflow,
@@ -136,11 +98,16 @@ function Board(props) {
         }
     })
 
-    console.log("workflowsAndColumnsMerged", workflowsAndColumnsMerged)
-
     const workflowsAndColumnsCleaned = workflowsAndColumnsMerged.filter(workflow => workflow.type === 0)
+    console.log("workflowsAndColumnsCleaned:", workflowsAndColumnsCleaned)
 
-    console.log("workflowsAndColumnsCleaned", workflowsAndColumnsCleaned)
+    /** @note fallback */
+
+    if (!board || !columns || columns.length === 0) {
+        return <div>Loading...</div>
+    }
+
+    /** @note settings for slider */
 
     const settings = {
         dots: true,
@@ -175,12 +142,7 @@ function Board(props) {
         );
     }
 
-    /* const columns2 = [];
-    for (let aux of workflowsAndColumnsCleaned.columns) {
-        columns2 += aux.workflow_id;
-    }
-
-    console.log("columns2", columns2) */
+    /** @note search bar */
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -202,6 +164,29 @@ function Board(props) {
         );
     });
 
+    /** @note modal */
+
+    /* const openModal = ({ card_id, title, description, comment_count }) => {
+        setCard({
+            card_id: card_id,
+            title: title,
+            description: description,
+            comment_count: comment_count,
+        });
+
+        setShowModal(true);
+    }; */
+
+    /* const closeModal = () => {
+        setShowModal(false);
+        setCard({
+            card_id: null,
+            title: "",
+            description: "",
+            comment_count: 0,
+        });
+    }; */
+
     return (
         <>
             <header className={styles.header}>
@@ -209,9 +194,8 @@ function Board(props) {
             </header>
 
             <div className={styles.container}>
-                {/* make a select tag with options based on workflowsAndColumnsCleaned with a default value and onchange to trigger value */}
-                <select onChange={handleChangeWorkflow} className={styles.select} /* defaultValue={workflowsAndColumnsCleaned[0].workflow_id} */>
-                    <option value={-1}>Select a workflow</option>
+                <select onChange={handleChangeWorkflow} className={styles.select}>
+                    <option value={-1}>{t("Translation.SelectWorkflow")}</option>
                     {workflowsAndColumnsCleaned.map((workflow) => (
                         <option
                             key={workflow.workflow_id}
@@ -252,13 +236,14 @@ function Board(props) {
                                             {
                                                 column.name == "Backlog" &&
                                                 <div className={styles.btnCreateCard}>
-                                                    <Modal column_id={column.column_id} lane_id={workflow.workflow_id} forceUpdate={forceUpdate} />
+                                                    <Modal board_id={boardId} column_id={column.column_id} lane_id={workflow.workflow_id} forceUpdate={forceUpdate} />
                                                 </div>
                                             }
 
                                             {filteredCards.map((card) => (
                                                 card.column_id == column.column_id ? (
-                                                    <div className={styles.card} key={card.card_id}>
+                                                    <div className={styles.card} key={card.card_id} /* onClick={() => openModal({ card_id: card.card_id, title: card.title, description: card.description, comment_count: card.comment_count })} */>
+                                                        <ModalDialog /* setSelectedCardId={setSelectedCardId} */ columnId={column.column_id} boardId={boardId} cardId={card.card_id} title={card.title} description={card.description} comment_count={card.comment_count} deadline={card.deadline} selectedWorkflow={selectedWorkflow} workflowsAndColumnsCleaned={workflowsAndColumnsCleaned} /* isOpen={showModal} onClose={closeModal} */ forceUpdateProp={forceUpdate} />
                                                         <header className={styles.cardHeader}>
                                                             <h3>{card.title}</h3>
                                                         </header>

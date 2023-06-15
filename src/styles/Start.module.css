@@ -3,22 +3,42 @@ div.grid {
     place-items: center;
     height: 100vh;
     width: 100vw;
-    /* margin-top: 15rem; */
 }
 
-/* div.logoContainer {
+figure.logoContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-div.logoContainer img.logo {
-    width: 11em;
-    height: 11em;
-    position: absolute;
-    top: 8em;
-    z-index: 1;
-} */
+figure.logoContainer img.logo {
+    aspect-ratio: 1/1;
+    width: 10rem;
+    height: 10rem;
+}
+
+figure.logoContainer figcaption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+figure.logoContainer figcaption h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+figcaption.figcaption h1:has(span) span.secondWord {
+    color: var(--accent-color);
+}
+
+figcaption.figcaption h1+p {
+    color: var(--details);
+    font-size: 1.5rem;
+    font-weight: 500;
+}
 
 .start {
     /* background-color: var(--main-color);
@@ -36,6 +56,29 @@ div.logoContainer img.logo {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 1.5rem;
     position: relative;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+footer>span {
+    color: var(--details);
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+footer img.logoOriginal {
+    aspect-ratio: 1/1;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.5rem;
 }

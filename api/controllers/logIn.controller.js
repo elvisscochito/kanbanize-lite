@@ -1,7 +1,5 @@
-const oldKanbanizeApiUrl = "https://university6y.kanbanize.com/index.php/api/kanbanize";
-
 export const postLogIn = async (req, res) => {
-    const response = await fetch(`${oldKanbanizeApiUrl}/login/format/json`, {
+    const response = await fetch(`https://${req.body.domain}.kanbanize.com/index.php/api/kanbanize/login/format/json`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

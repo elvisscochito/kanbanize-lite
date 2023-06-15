@@ -1,8 +1,10 @@
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import styles from '../styles/Home.module.css';
 import apiUrlPrefix from '../config/apiUrlPrefix';
+import styles from '../styles/Home.module.css';
 
 function Home(props) {
   const { t } = useTranslation("global");
@@ -14,7 +16,8 @@ function Home(props) {
       let response = await fetch(`${apiUrlPrefix}/board`, {
         method: 'GET',
         headers: {
-          'apikey': localStorage.getItem('apikey')
+          'apikey': localStorage.getItem('apikey'),
+          'domain': localStorage.getItem('domain')
         }
       })
       const boardsResponse = await response.json()
@@ -26,7 +29,8 @@ function Home(props) {
         response = await fetch(`${apiUrlPrefix}/usersByBoard/${board.board_id}`, {
           method: 'GET',
           headers: {
-            'apikey': localStorage.getItem('apikey')
+            'apikey': localStorage.getItem('apikey'),
+            'domain': localStorage.getItem('domain')
           }
         })
         const users = await response.json()
@@ -91,6 +95,7 @@ function Home(props) {
               </Link>
             </header>
             <div className={styles.users}>
+              <FontAwesomeIcon icon={faUser} />&nbsp;:&nbsp;
               {board.users &&
                 board.users.length > 0 &&
                 board.users.map((user) => (

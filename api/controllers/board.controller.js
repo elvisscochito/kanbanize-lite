@@ -1,7 +1,5 @@
-const newKanbanizeApiUrl = "https://university6y.kanbanize.com/api/v2";
-
 export const getBoards = async (req, res) => {
-    const response = await fetch(`${newKanbanizeApiUrl}/boards?is_archived=0&if_assigned=1&fields=board_id&expand=structure`, {
+    const response = await fetch(`https://${req.headers.domain}.kanbanize.com/api/v2/boards?is_archived=0&if_assigned=1&fields=board_id&expand=structure`, {
         headers: {
             apikey: req.headers.apikey
         }
@@ -13,7 +11,7 @@ export const getBoards = async (req, res) => {
 export const getUsersByBoard = async (req, res) => {
     // users_roles -> userId
     const response = await fetch(
-        `${newKanbanizeApiUrl}/boards/${req.params.boardId}/userRoles`,
+        `https://${req.headers.domain}.kanbanize.com/api/v2/boards/${req.params.boardId}/userRoles`,
         {
             headers: {
                 apikey: req.headers.apikey,
@@ -28,7 +26,7 @@ export const getUsersByBoard = async (req, res) => {
 
         // username
         const response2 = await fetch(
-            `${newKanbanizeApiUrl}/users?user_ids=${user_ids}`,
+            `https://${req.headers.domain}.kanbanize.com/api/v2/users?user_ids=${user_ids}`,
             {
                 headers: {
                     apikey: req.headers.apikey
@@ -42,7 +40,7 @@ export const getUsersByBoard = async (req, res) => {
 
 export const getBoard = async (req, res) => {
     const response = await fetch(
-        `${newKanbanizeApiUrl}/boards?board_ids=${req.params.boardId}&if_assigned=1&fields=board_id,name&expand=workflows`,
+        `https://${req.headers.domain}.kanbanize.com/api/v2/boards?board_ids=${req.params.boardId}&if_assigned=1&fields=board_id,name&expand=workflows`,
         {
             headers: {
                 apikey: req.headers.apikey
@@ -55,7 +53,7 @@ export const getBoard = async (req, res) => {
 
 export const getColumns = async (req, res) => {
     const response = await fetch(
-        `${newKanbanizeApiUrl}/boards/${req.params.boardId}/columns`,
+        `https://${req.headers.domain}.kanbanize.com/api/v2/boards/${req.params.boardId}/columns`,
         {
             headers: {
                 apikey: req.headers.apikey
@@ -68,7 +66,7 @@ export const getColumns = async (req, res) => {
 
 export const getCards = async (req, res) => {
     const response = await fetch(
-        `${newKanbanizeApiUrl}/cards?board_ids=${req.params.boardId}&fields=card_id,title,description,owner_user_id,deadline,board_id,workflow_id,column_id,comment_count`,
+        `https://${req.headers.domain}.kanbanize.com/api/v2/cards?board_ids=${req.params.boardId}&fields=card_id,title,description,owner_user_id,deadline,board_id,workflow_id,column_id,comment_count`,
         {
             headers: {
                 apiKey: req.headers.apikey
@@ -80,7 +78,7 @@ export const getCards = async (req, res) => {
 }
 
 export const postCard = async (req, res) => {
-    const response = await fetch(`${newKanbanizeApiUrl}/cards`, {
+    const response = await fetch(`https://${req.body.domain}.kanbanize.com/api/v2/cards`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -91,6 +89,50 @@ export const postCard = async (req, res) => {
             lane_id: req.body.lane_id,
             title: req.body.title,
             description: req.body.description
+        }),
+    });
+    const data = await response.json();
+    res.json(data);
+}
+
+export const patchCard = async (req, res) => {
+    const response = await fetch(`https://${req.body.domain}.kanbanize.com/api/v2/cards/${req.params.cardId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            apiKey: req.headers.apikey
+        },
+        body: JSON.stringify({
+            column_id: req.body.column_id,
+        }),
+    });
+    const data = await response.json();
+    res.json(data);
+}
+
+export const getComments = async (req, res) => {
+    const response = await fetch(
+        `https://${req.headers.domain}.kanbanize.com/api/v2/cards/${req.params.cardId}/comments`,
+        {
+            headers: {
+                apiKey: req.headers.apikey
+            }
+        }
+    );
+    const data = await response.json();
+    res.json(data);
+}
+
+export const postComment = async (req, res) => {
+    const response = await fetch(`https://${req.body.domain}.kanbanize.com/api/v2/cards/${req.params.cardId}/comments`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            apiKey: req.headers.apikey
+        },
+        body: JSON.stringify({
+            text: req.body.text/* ,
+            attachments_to_add: req.body.attachments_to_add */
         }),
     });
     const data = await response.json();

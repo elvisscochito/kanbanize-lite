@@ -59,7 +59,7 @@ label.formLabel {
     text-align: center;
 }
 
-input.inputLogin:is([type=email], [type=password]) {
+input.inputLogin:is([type=email], [type=password], [type=text]) {
     border: none;
     border-bottom: 2px solid var(--aux-color);
     padding: 1em 1.5em;
@@ -79,7 +79,8 @@ input.inputLogin:focus:is([type=email], [type=password]) {
     border-bottom: 2px solid var(--accent-color);
 }
 
-span.formInputError, span.passwordEmptyError {
+span.formInputError,
+span.passwordEmptyError {
     font-size: 1.2em;
     color: var(--error-color);
     font-weight: 500;
@@ -92,7 +93,8 @@ span.formInputError {
     display: none;
 }
 
-.formValidationStatusSuccess, .formValidationStatusError {
+.formValidationStatusSuccess,
+.formValidationStatusError {
     position: absolute;
     right: 1em;
     top: 1.65em;
@@ -105,17 +107,17 @@ span.formInputError {
 
 /* VALIDATION SECTION */
 
-input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid) + .formValidationStatusSuccess{
+input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid)+.formValidationStatusSuccess {
     opacity: 1;
     color: var(--success-color);
 }
 
-input.inputLogin[type=email]:is(:not(:focus):not(:placeholder-shown):valid) + .formValidationStatusSuccess {
+input.inputLogin[type=email]:is(:not(:focus):not(:placeholder-shown):valid)+.formValidationStatusSuccess {
     opacity: 1;
     color: var(--aux-color);
 }
 
-input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidationStatusError {
+input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid)~.formValidationStatusError {
     opacity: 1;
     color: var(--error-color);
 }
@@ -124,15 +126,15 @@ input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid) ~ .formValidat
     fieldset:has(input.inputLogin:focus) label {
         color: var(--accent-color);
     }
-    
-    fieldset:has(input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid)) > label {
+
+    fieldset:has(input.inputLogin[type=email]:focus:is(:not(:placeholder-shown):valid))>label {
         color: var(--success-color);
     }
-    
-    fieldset:has(input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid)) > label {
+
+    fieldset:has(input.inputLogin[type=email]:is(:not(:placeholder-shown):invalid))>label {
         color: var(--error-color);
     }
-    
+
     div.formInputLogin:has(input.inputLogin[type=email]:is(:not(:focus)):invalid:not(:placeholder-shown)) span.formInputError {
         display: block;
     }
@@ -162,9 +164,11 @@ input.inputLogin[type=email]:is(:not(:focus)):invalid:not(:placeholder-shown) {
     25% {
         transform: translateX(4px);
     }
+
     50% {
         transform: translateX(-4px);
     }
+
     75% {
         transform: translateX(4px);
     }

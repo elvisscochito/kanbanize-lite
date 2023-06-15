@@ -1,10 +1,9 @@
-import { useRef, useId } from 'react';
-import styles from './Modal.module.css';
+import { useId, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import apiUrlPrefix from '../config/apiUrlPrefix';
+import styles from './Modal.module.css';
 
-const Modal = ({ column_id, lane_id, forceUpdate }) => {
-    /* const apiUrlPrefix = 'http://localhost:3000/board:boardId/card'; */
+const Modal = ({ board_id, column_id, lane_id, forceUpdate }) => {
     const dialog = useRef(null);
     const form = useRef();
     const id = useId();
@@ -25,12 +24,11 @@ const Modal = ({ column_id, lane_id, forceUpdate }) => {
             column_id: column_id,
             lane_id: lane_id,
             title: form.current.title.value,
-            description: form.current.description.value
+            description: form.current.description.value,
+            domain: localStorage.getItem('domain')
         })
 
-        const board_id = 15;
-
-        const response = await fetch(`http://localhost:3000/board/${board_id}/card`, {
+        const response = await fetch(`${apiUrlPrefix}/board/${board_id}/card`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,9 +51,9 @@ const Modal = ({ column_id, lane_id, forceUpdate }) => {
             <button onClick={showModal} className={`${styles.normalBtn} ${styles.newCardBtn}`}>{t("Translation.createNewCard")}</button>
             <dialog ref={dialog}>
                 <header>
-                    <h1></h1>
+                    <h1>{t("Translation.NewCard")}</h1>
                 </header>
-                <form className={styles.form} ref={form} onSubmit={handleSubmit}>
+                <form className={styles.form} ref={form} onSubmit={handleSubmit} id={`${id}-modalForm`}>
                     <fieldset className={styles.formGroup}>
                         <label className={styles.formLabel} htmlFor={`${id}-cardTitle`}>{t("Translation.CardTitle")}:</label>
                         <input type='text' className={styles.input} id={`${id}-cardTitle`} name='title' placeholder={t("Translation.CardTitlePlaceholder")} required />

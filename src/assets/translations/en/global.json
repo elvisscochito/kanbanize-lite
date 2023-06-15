@@ -1,5 +1,6 @@
 {
     "Translation": {
+        "StartDescription": "Kanbananize simplified",
         "BtnLogIn": "Log In",
         "LogIn": "Log In",
         "SignUp": "Sign Up",
@@ -17,6 +18,13 @@
         "CardTitlePlaceholder": "Title",
         "CardDescription": "Description",
         "CardDescriptionPlaceholder": "Description",
-        "CardCancel": "Cancel"
+        "CardCancel": "Cancel",
+        "Comments": "Comments",
+        "CommentsPlaceholder": "Write a comment...",
+        "CommentBtn": "Comment",
+        "CommentsCount": "No comments",
+        "OpenCard": "Open card",
+        "NewCard": "New card",
+        "SelectWorkflow": "Select a workflow"
     }
 }

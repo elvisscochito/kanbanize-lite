@@ -2,9 +2,10 @@ import { faCircleCheck, faEnvelope, faLock, faTimesCircle } from '@fortawesome/f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useId, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
-import login from '../styles/LogIn.module.css';
+import { useNavigate } from 'react-router-dom';
+import login from '../assets/login.svg';
 import apiUrlPrefix from '../config/apiUrlPrefix';
+import styles from '../styles/LogIn.module.css';
 
 export default function LogIn() {
   const { t } = useTranslation("global");
@@ -16,11 +17,9 @@ export default function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const email = localStorage.setItem('email', form.current.email.value);
-    const password = localStorage.setItem('password', form.current.password.value);
-
     const formData = JSON.stringify({
       email: form.current.email.value,
+      domain: form.current.domain.value,
       password: form.current.password.value
     })
 
@@ -35,28 +34,13 @@ export default function LogIn() {
     const data = await response.json() // user info data
     console.log(data)
     if (data.response !== 'Invalid email or password.') {
-
-      if (localStorage.getItem('username') !== null) {
-        localStorage.removeItem('apikey')
-        localStorage.removeItem('username')
-      } else {
-        localStorage.setItem('apikey', data.apikey)
-        localStorage.setItem('username', data.username);
-        /* alert(localStorage.getItem('apikey')) */
-        console.warn(localStorage.getItem('username'))
-      }
-
-      /* console.log(data.apikey)
-      console.log(data.username) */
-      // console log para ver si se guardan los datos en el local storage
-      /* console.log(localStorage.getItem('apikey'))
-      console.log(localStorage.getItem('username')) */
+      localStorage.setItem('apikey', data.apikey)
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('domain', data.companyname);
       navigate('/kanbanize-lite/pagina-principal', { replace: true })
     } else {
-      console.log('error')
+      console.error('error')
     }
-    /* console.log(response)
-    console.log(data) */
   }
 
   const handlePassword = (e) => {
@@ -72,45 +56,55 @@ export default function LogIn() {
 
   return (
     <>
-      <div className={login.grid}>
-        <header className={login.header}>
+      <div className={styles.grid}>
+        <header className={styles.header}>
           <h1>{t("Translation.BtnLogIn")}</h1>
         </header>
 
-        {/* <div className={login.iconContainer}>
-          <Link to="/"><img className={login.iconLogin} src={icon} alt="Icon"/></Link>
-        </div> */}
+        <div className={styles.iconContainer}>
+          <img className={styles.iconLogin} src={login} alt="Icon" />
+        </div>
 
-        <form className={login.form} ref={form} onSubmit={handleSubmit}>
-          <fieldset className={login.formGroup} id={`${id}-formGroupEmail`}>
-            <label className={login.formLabel} htmlFor={`${id}-email`}>
+        <form className={styles.form} ref={form} onSubmit={handleSubmit}>
+          <fieldset className={styles.formGroup} id={`${id}-formGroupEmail`}>
+            <label className={styles.formLabel} htmlFor={`${id}-email`}>
               <FontAwesomeIcon icon={faEnvelope} />
             </label>
-            <div className={login.formInputLogin}>
-              <input type="email" className={login.inputLogin} id={`${id}-email`} name="email" placeholder="Correo electrónico" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su correo electrónico institucional.')} autoComplete="true" autoFocus required />
-              <FontAwesomeIcon className={login.formValidationStatusSuccess} icon={faCircleCheck} />
-              <FontAwesomeIcon className={login.formValidationStatusError} icon={faTimesCircle} />
-              <span className={login.formInputError}>{t("Translation.EmailInputError")}</span>
+            <div className={styles.formInputLogin}>
+              <input type="email" className={styles.inputLogin} id={`${id}-email`} name="email" placeholder="Correo electrónico" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su correo electrónico institucional.')} autoComplete="true" autoFocus required />
+              <FontAwesomeIcon className={styles.formValidationStatusSuccess} icon={faCircleCheck} />
+              <FontAwesomeIcon className={styles.formValidationStatusError} icon={faTimesCircle} />
+              <span className={styles.formInputError}>{t("Translation.EmailInputError")}</span>
             </div>
           </fieldset>
 
-          <fieldset className={login.formGroup} id={`${id}-formGroupPassword`}>
-            <label className={login.formLabel} htmlFor={`${id}-password`}>
+          <fieldset className={styles.formGroup} id={`${id}-formGroupDomain`}>
+            <label className={styles.formLabel} htmlFor={`${id}-domain`}>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </label>
+            <div className={styles.formInputLogin}>
+              <input type="text" className={styles.inputLogin} id={`${id}-domain`} name="domain" placeholder="Dominio" /* title='Ingrese su correo electrónico institucional.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su dominio institucional.')} autoComplete="true" required />
+              <FontAwesomeIcon className={styles.formValidationStatusSuccess} icon={faCircleCheck} />
+              <FontAwesomeIcon className={styles.formValidationStatusError} icon={faTimesCircle} />
+              <span className={styles.formInputError}>{t("Translation.EmailInputError")}</span>
+            </div>
+          </fieldset>
+
+          <fieldset className={styles.formGroup} id={`${id}-formGroupPassword`}>
+            <label className={styles.formLabel} htmlFor={`${id}-password`}>
               <FontAwesomeIcon icon={faLock} />
             </label>
-            <div className={login.formInputLogin}>
-              <input type="password" className={login.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ onBlur={handlePassword} /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required />
+            <div className={styles.formInputLogin}>
+              <input type="password" className={styles.inputLogin} id={`${id}-password`} name="password" placeholder="Contraseña" /* title='Ingrese su contraseña.' */ onInvalid={e => e.target.setCustomValidity('Por favor, ingrese aquí su contraseña.')} /* onPaste={(e) => {e.preventDefault(); return false;}} */ /* onCopy={(e) => {e.preventDefault(); return false;}} */ onBlur={handlePassword} /* onSelectStart={(e) => {e.preventDefault(); return false;}} */ autoComplete="true" required />
               {
                 passwordEmptyError &&
-                <span className={login.passwordEmptyError}>{t("Translation.PasswordInputError")}</span>
+                <span className={styles.passwordEmptyError}>{t("Translation.PasswordInputError")}</span>
               }
             </div>
           </fieldset>
 
-          <span className={login.newAccount}>{t("Translation.newAccount")} <br /> <Link to="/registro-de-cuenta">{t("Translation.newAccountHere")} &gt;</Link>.</span>
-
-          <footer className={login.formFooterLogin}>
-            <button className={login.formBtnSubmitLogin} type="submit">{t("Translation.formBtnSubmitLogin")}</button>
+          <footer className={styles.formFooterLogin}>
+            <button className={styles.formBtnSubmitLogin} type="submit">{t("Translation.formBtnSubmitLogin")}</button>
           </footer>
         </form>
       </div>

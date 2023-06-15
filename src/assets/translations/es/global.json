@@ -1,5 +1,6 @@
 {
     "Translation": {
+        "StartDescription": "Kanbanize simplificado",
         "BtnLogIn": "Iniciar sesión",
         "LogIn": "Inicio de sesión",
         "SignUp": "Registrarse",
@@ -17,6 +18,13 @@
         "CardTitlePlaceholder": "Título de la tarjeta",
         "CardDescription": "Descripción",
         "CardDescriptionPlaceholder": "Descripción de la tarjeta",
-        "CardCancel": "Cancelar"
+        "CardCancel": "Cancelar",
+        "Comments": "Comentarios",
+        "CommentsPlaceholder": "Escribe un comentario...",
+        "CommentBtn": "Comentar",
+        "CommentsCount": "No hay comentarios",
+        "OpenCard": "Abrir tarjeta",
+        "NewCard": "Nueva tarjeta",
+        "SelectWorkflow": "Selecciona un flujo de trabajo"
     }
 }
